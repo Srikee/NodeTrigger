@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="node_modules/socket.io/client-dist/socket.io.min.js"></script>
+    <script>
+        var socket = io("http://localhost:3000", {
+            secure: true,
+            transports: ["websocket", "polling"]
+        });
+        socket.on("trigger", (data) => {
+            console.log(data);
+        });
+
+        function Join() {
+            socket.emit("join", "room1");
+        }
+        function Trigger() {
+            socket.emit("trigger", "room1", "World");
+        }
+        function Disjoin() {
+            socket.emit("disjoin", "room1");
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="Join()">Join</button>
+    <button onclick="Trigger()">Trigger</button>
+    <button onclick="Disjoin()">Disjoin</button>
+    <!-- <button onclick="TriggerRoom()">TriggerRoom</button> -->
+</body>
+
+</html>
